@@ -27,5 +27,4 @@ public class UserReactiveRepositoryAdapter extends ReactiveAdapterOperations<
         return repository.findByEmail(email)
                 .map(super::toEntity);
     }
-
 }
