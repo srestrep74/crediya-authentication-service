@@ -1,17 +1,15 @@
-package co.com.crediya.usecase.registeruser;
+package co.com.crediya.usecase.user;
 
 import co.com.crediya.model.user.User;
 import co.com.crediya.model.user.exception.EmailAlreadyExistsException;
-import co.com.crediya.model.user.exception.InvalidUserDataException;
 import co.com.crediya.model.user.gateways.UserRepository;
 import co.com.crediya.model.user.validators.UserValidator;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 //@Slf4j
 @RequiredArgsConstructor
-public class RegisterUserUseCase {
+public class UserUseCase {
 
     private final UserRepository userRepository;
 
