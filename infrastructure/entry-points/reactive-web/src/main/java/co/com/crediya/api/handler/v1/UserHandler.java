@@ -27,10 +27,10 @@ public class UserHandler {
                         .status(HttpStatus.CREATED)
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(userResponse)
-                )
-                .onErrorResume(ex -> ServerResponse
+                );
+                /*.onErrorResume(ex -> ServerResponse
                         .badRequest()
                         .bodyValue(ex.getMessage())
-                );
+                );*/
     }
 }
