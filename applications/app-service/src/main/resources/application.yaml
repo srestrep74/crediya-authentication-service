@@ -31,3 +31,9 @@ adapters:
     schema: public
     username: admin
     password: admin
+
+springdoc:
+  show-actuator: false
+  swagger-ui:
+    operations-sorter: alpha
+    disable-swagger-default-url: true
