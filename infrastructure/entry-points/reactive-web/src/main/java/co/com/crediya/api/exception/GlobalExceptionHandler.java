@@ -18,7 +18,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
-@Component
 public class GlobalExceptionHandler extends AbstractErrorWebExceptionHandler {
 
     private final Map<Class<? extends Exception>, HttpStatus> exceptionToStatusCode;
