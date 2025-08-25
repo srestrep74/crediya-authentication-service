@@ -19,7 +19,7 @@ public class UserUseCase {
                 userRepository.findByEmail(user.getEmail().getValue())
                         .flatMap(existingUser ->
                                 Mono.<User>error (new EmailAlreadyExistsException(user.getEmail().getValue()))
-                        ).switchIfEmpty(userRepository.save(user))
+                        ).switchIfEmpty(Mono.defer(() -> userRepository.save(user)))
         );
     }
 }
