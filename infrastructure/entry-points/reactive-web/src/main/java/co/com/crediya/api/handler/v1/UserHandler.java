@@ -21,7 +21,7 @@ public class UserHandler {
         return serverRequest
                 .bodyToMono(CreateUserRequest.class)
                 .map(CreateUserMapper::toDomain)
-                .flatMap(userUseCase::register)
+                .flatMap(userUseCase::save)
                 .map(CreateUserMapper::toDto)
                 .flatMap(userResponse -> ServerResponse
                         .status(HttpStatus.CREATED)

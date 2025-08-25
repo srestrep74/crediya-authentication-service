@@ -1,5 +1,8 @@
 package co.com.crediya.model.user;
 
+import co.com.crediya.model.user.valueobjects.Email;
+import co.com.crediya.model.user.valueobjects.PersonName;
+import co.com.crediya.model.user.valueobjects.Salary;
 import lombok.Builder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,10 +18,10 @@ import java.math.BigDecimal;
 @Builder(toBuilder = true)
 public class User {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private PersonName firstName;
+    private PersonName lastName;
+    private Email email;
     private String identityDocument;
     private String phoneNumber;
-    private BigDecimal baseSalary;
+    private Salary baseSalary;
 }
