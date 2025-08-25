@@ -17,7 +17,7 @@ public class UserReactiveRepositoryAdapter extends ReactiveAdapterOperations<
     private final UserMapper userMapper;
 
     public UserReactiveRepositoryAdapter(UserReactiveRepository repository, ObjectMapper mapper, UserMapper userMapper) {
-        super(repository, mapper, userMapper::toEntity);
+        super(repository, mapper, entity -> mapper.map(entity, User.class));
         this.userMapper = userMapper;
     }
 
@@ -35,5 +35,10 @@ public class UserReactiveRepositoryAdapter extends ReactiveAdapterOperations<
     @Override
     public UserEntity toData(User user) {
         return userMapper.toData(user);
+    }
+
+    @Override
+    public User toEntity(UserEntity userEntity) {
+        return userMapper.toEntity(userEntity);
     }
 }
