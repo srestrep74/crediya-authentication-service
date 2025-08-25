@@ -28,9 +28,5 @@ public class UserHandler {
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(userResponse)
                 );
-                /*.onErrorResume(ex -> ServerResponse
-                        .badRequest()
-                        .bodyValue(ex.getMessage())
-                );*/
     }
 }

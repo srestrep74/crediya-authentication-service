@@ -3,6 +3,7 @@ package co.com.crediya.api.router.documentation;
 import co.com.crediya.api.dto.v1.CreateUserRequest;
 import co.com.crediya.api.dto.v1.CreateUserResponse;
 import co.com.crediya.api.handler.v1.UserHandler;
+import co.com.crediya.api.helpers.ApiStandardError;
 import co.com.crediya.api.router.UserRouter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -52,7 +53,19 @@ public class UserRouterApiDocumentation {
                                     ),
                                     @ApiResponse(
                                             responseCode = "400",
-                                            description = "Bad Request - Invalid input data"
+                                            description = "Bad Request - Invalid input data",
+                                            content = @Content(
+                                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                    schema = @Schema(implementation = ApiStandardError.class)
+                                            )
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "409",
+                                            description = "Conflict - Email already exists",
+                                            content = @Content(
+                                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                    schema = @Schema(implementation = ApiStandardError.class)
+                                            )
                                     ),
                                     @ApiResponse(
                                             responseCode = "500",
