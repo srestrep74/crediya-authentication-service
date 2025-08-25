@@ -1,7 +1,7 @@
 package co.com.crediya.r2dbc.adapters.user;
 
 import co.com.crediya.model.user.User;
-import co.com.crediya.model.user.gateways.UserRepository;
+import co.com.crediya.model.user.gateways.UserReactivePersistenceGateway;
 import co.com.crediya.r2dbc.entity.UserEntity;
 import co.com.crediya.r2dbc.helper.ReactiveAdapterOperations;
 import co.com.crediya.r2dbc.mapper.user.UserMapper;
@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-public class UserReactiveRepositoryAdapter extends ReactiveAdapterOperations<
+public class R2dbcUserReactivePersistenceAdapter extends ReactiveAdapterOperations<
     User, UserEntity, Long, UserReactiveRepository
-> implements UserRepository {
+> implements UserReactivePersistenceGateway {
 
     private final UserMapper userMapper;
 
-    public UserReactiveRepositoryAdapter(UserReactiveRepository repository, ObjectMapper mapper, UserMapper userMapper) {
+    public R2dbcUserReactivePersistenceAdapter(UserReactiveRepository repository, ObjectMapper mapper, UserMapper userMapper) {
         super(repository, mapper, entity -> mapper.map(entity, User.class));
         this.userMapper = userMapper;
     }

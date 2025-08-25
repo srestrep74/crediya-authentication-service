@@ -3,7 +3,7 @@ package co.com.crediya.usecase.user;
 import co.com.crediya.model.user.User;
 import co.com.crediya.model.user.exception.EmailAlreadyExistsException;
 import co.com.crediya.model.user.gateways.TransactionGateway;
-import co.com.crediya.model.user.gateways.UserRepository;
+import co.com.crediya.model.user.gateways.UserReactivePersistenceGateway;
 import co.com.crediya.model.user.valueobjects.Email;
 import co.com.crediya.model.user.valueobjects.PersonName;
 import co.com.crediya.model.user.valueobjects.Salary;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 public class UserUseCaseTest {
 
     @Mock
-    private UserRepository userRepository;
+    private UserReactivePersistenceGateway userReactivePersistenceGateway;
 
     @Mock
     private TransactionGateway transactionGateway;
@@ -49,23 +49,23 @@ public class UserUseCaseTest {
 
     @Test
     void shouldSaveUserWhenEmailDoesNotExist() {
-        when(userRepository.findByEmail(user.getEmail().getValue())).thenReturn(Mono.empty());
-        when(userRepository.save(user)).thenReturn(Mono.just(user));
+        when(userReactivePersistenceGateway.findByEmail(user.getEmail().getValue())).thenReturn(Mono.empty());
+        when(userReactivePersistenceGateway.save(user)).thenReturn(Mono.just(user));
         when(transactionGateway.execute(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
         StepVerifier.create(userUseCase.save(user))
                 .expectNextMatches(savedUser -> savedUser.getEmail().equals(user.getEmail()))
                 .verifyComplete();
 
-        verify(userRepository).findByEmail(user.getEmail().getValue());
-        verify(userRepository).save(user);
+        verify(userReactivePersistenceGateway).findByEmail(user.getEmail().getValue());
+        verify(userReactivePersistenceGateway).save(user);
         verify(transactionGateway).execute(any());
 
     }
 
     @Test
     void shouldThrowErrorWhenEmailAlreadyExists() {
-        when(userRepository.findByEmail(user.getEmail().getValue())).thenReturn(Mono.just(user));
+        when(userReactivePersistenceGateway.findByEmail(user.getEmail().getValue())).thenReturn(Mono.just(user));
         when(transactionGateway.execute(any()))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -74,13 +74,13 @@ public class UserUseCaseTest {
                         ex.getMessage().contains(user.getEmail().getValue())
                 ).verify();
 
-        verify(userRepository).findByEmail(user.getEmail().getValue());
-        verify(userRepository, never()).save(any());
+        verify(userReactivePersistenceGateway).findByEmail(user.getEmail().getValue());
+        verify(userReactivePersistenceGateway, never()).save(any());
     }
 
     @Test
     void shouldPropagateErrorWhenTransactionFails() {
-        when(userRepository.findByEmail(user.getEmail().getValue())).thenReturn(Mono.empty());
+        when(userReactivePersistenceGateway.findByEmail(user.getEmail().getValue())).thenReturn(Mono.empty());
         when(transactionGateway.execute(any())).thenReturn(Mono.error(new RuntimeException("Tx error")));
 
         StepVerifier.create(userUseCase.save(user))
@@ -88,8 +88,8 @@ public class UserUseCaseTest {
                         ex.getMessage().equals("Tx error"))
                 .verify();
 
-        verify(userRepository).findByEmail(user.getEmail().getValue());
-        verify(userRepository, never()).save(any());
+        verify(userReactivePersistenceGateway).findByEmail(user.getEmail().getValue());
+        verify(userReactivePersistenceGateway, never()).save(any());
         verify(transactionGateway).execute(any());
     }
 }

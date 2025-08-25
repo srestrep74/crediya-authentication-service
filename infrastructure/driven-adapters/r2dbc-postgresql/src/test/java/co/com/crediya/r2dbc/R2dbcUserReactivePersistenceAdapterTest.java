@@ -5,7 +5,7 @@ import co.com.crediya.model.user.valueobjects.Email;
 import co.com.crediya.model.user.valueobjects.PersonName;
 import co.com.crediya.model.user.valueobjects.Salary;
 import co.com.crediya.r2dbc.adapters.user.UserReactiveRepository;
-import co.com.crediya.r2dbc.adapters.user.UserReactiveRepositoryAdapter;
+import co.com.crediya.r2dbc.adapters.user.R2dbcUserReactivePersistenceAdapter;
 import co.com.crediya.r2dbc.entity.UserEntity;
 import co.com.crediya.r2dbc.mapper.user.UserMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.reactivecommons.utils.ObjectMapper;
-import org.springframework.data.domain.Example;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -26,10 +24,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserReactiveRepositoryAdapterTest {
+class R2dbcUserReactivePersistenceAdapterTest {
 
     @InjectMocks
-    UserReactiveRepositoryAdapter repositoryAdapter;
+    R2dbcUserReactivePersistenceAdapter repositoryAdapter;
 
     @Mock
     UserReactiveRepository repository;
