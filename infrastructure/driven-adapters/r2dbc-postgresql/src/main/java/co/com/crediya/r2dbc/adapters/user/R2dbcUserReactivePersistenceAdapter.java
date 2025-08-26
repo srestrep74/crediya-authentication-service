@@ -29,7 +29,7 @@ public class R2dbcUserReactivePersistenceAdapter extends ReactiveAdapterOperatio
     @Override
     public Mono<User> findByEmail(String email) {
         return repository.findByEmail(email)
-                .map(super::toEntity);
+                .map(this::toEntity);
     }
 
     @Override

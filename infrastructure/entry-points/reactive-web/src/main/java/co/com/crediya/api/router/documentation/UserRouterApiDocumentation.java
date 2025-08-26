@@ -56,7 +56,11 @@ public class UserRouterApiDocumentation {
                                             description = "Bad Request - Invalid input data",
                                             content = @Content(
                                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                                    schema = @Schema(implementation = ApiStandardError.class)
+                                                    schema = @Schema(implementation = ApiStandardError.class),
+                                                    examples = @ExampleObject(
+                                                            name = "InvalidInput",
+                                                            value = "{ \"timestamp\": \"2025-08-25T19:00:00\", \"status\": 400, \"error\": \"Bad Request\", \"message\": \"Email is invalid\", \"path\": \"/api/v1/users\" }"
+                                                    )
                                             )
                                     ),
                                     @ApiResponse(
@@ -64,7 +68,11 @@ public class UserRouterApiDocumentation {
                                             description = "Conflict - Email already exists",
                                             content = @Content(
                                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                                    schema = @Schema(implementation = ApiStandardError.class)
+                                                    schema = @Schema(implementation = ApiStandardError.class),
+                                                    examples = @ExampleObject(
+                                                            name = "EmailConflict",
+                                                            value = "{ \"timestamp\": \"2025-08-25T19:00:00\", \"status\": 409, \"error\": \"Conflict\", \"message\": \"Email already exists\", \"path\": \"/api/v1/users\" }"
+                                                    )
                                             )
                                     ),
                                     @ApiResponse(
