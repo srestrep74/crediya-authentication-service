@@ -6,4 +6,5 @@ import reactor.core.publisher.Mono;
 public interface UserReactivePersistenceGateway {
     Mono<User> save(User user);
     Mono<User> findByEmail(String email);
+    Mono<Boolean> existsById(Long userId);
 }

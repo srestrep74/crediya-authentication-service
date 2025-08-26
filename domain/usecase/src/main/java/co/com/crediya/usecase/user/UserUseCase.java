@@ -22,4 +22,13 @@ public class UserUseCase {
                         ).switchIfEmpty(Mono.defer(() -> userReactivePersistenceGateway.save(user)))
         );
     }
+
+    public Mono<Boolean> existsById(Long userId) {
+        return Mono.justOrEmpty(userId)
+                .filter(id -> id > 0)
+                .flatMap(userReactivePersistenceGateway::existsById)
+                .defaultIfEmpty(false);
+    }
+
+
 }

@@ -33,6 +33,11 @@ public class R2dbcUserReactivePersistenceAdapter extends ReactiveAdapterOperatio
     }
 
     @Override
+    public Mono<Boolean> existsById(Long userId) {
+        return repository.existsById(userId);
+    }
+
+    @Override
     public UserEntity toData(User user) {
         return userMapper.toData(user);
     }

@@ -11,15 +11,7 @@ spring:
       schema-locations: classpath:/migrations/schema.sql
   profiles:
     include: null
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "health,prometheus"
-  endpoint:
-    health:
-      probes:
-        enabled: true
+
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
 

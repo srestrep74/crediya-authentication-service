@@ -16,6 +16,7 @@ public class UserRouter {
     public RouterFunction<ServerResponse> routes() {
         return RouterFunctions.route()
                 .POST("/users", userHandler::listenSaveUser)
+                .GET("/users/{userId}/exists", userHandler::listenGetExistsUser)
                 .build();
     }
 }

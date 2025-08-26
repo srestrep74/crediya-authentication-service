@@ -1,6 +1,7 @@
 package co.com.crediya.api.handler.v1;
 
 import co.com.crediya.api.dto.v1.CreateUserRequest;
+import co.com.crediya.api.dto.v1.ExistsUserResponse;
 import co.com.crediya.api.mapper.CreateUserMapper;
 import co.com.crediya.usecase.user.UserUseCase;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,21 @@ public class UserHandler {
                         .status(HttpStatus.CREATED)
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(userResponse)
+                );
+    }
+
+    public Mono<ServerResponse> listenGetExistsUser(ServerRequest serverRequest) {
+        return Mono.justOrEmpty(serverRequest.pathVariable("userId"))
+                .map(Long::valueOf)
+                .flatMap(userUseCase::existsById)
+                .map(exists -> ExistsUserResponse.builder()
+                        .exists(exists)
+                        .userId(Long.valueOf(serverRequest.pathVariable("userId")))
+                        .build())
+                .flatMap(response -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(response)
                 );
     }
 }
