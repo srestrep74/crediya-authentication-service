@@ -67,7 +67,7 @@ class R2dbcUserReactivePersistenceAdapterTest {
 
     @Test
     void shouldFindByEmail() {
-        when(mapper.map(userEntity, User.class)).thenReturn(user);
+        when(userMapper.toEntity(userEntity)).thenReturn(user);
         when(repository.findByEmail(email)).thenReturn(Mono.just(userEntity));
 
         Mono<User> result = repositoryAdapter.findByEmail(email);

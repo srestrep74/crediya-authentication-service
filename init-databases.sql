@@ -1,0 +1,2 @@
+CREATE DATABASE "auth-db";
+CREATE DATABASE "loan-db";
