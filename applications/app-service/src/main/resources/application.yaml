@@ -1,14 +1,31 @@
-##Spring Configuration
 server:
   port: 8080
 spring:
   application:
-    name: AuthenticationService
+    name: "AuthenticationService"
   devtools:
     add-properties: false
-  h2:
-    console:
-      enabled: true
-      path: /h2
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:/migrations/schema.sql
   profiles:
-    include:
+    include: null
+
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"
+
+adapters:
+  r2dbc:
+    host: localhost
+    port: 5432
+    database: auth-db
+    schema: public
+    username: admin
+    password: admin
+
+springdoc:
+  show-actuator: false
+  swagger-ui:
+    operations-sorter: alpha
+    disable-swagger-default-url: true

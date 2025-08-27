@@ -282,6 +282,7 @@ GitHub.sublime-settings
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+.vscode/
 
 ### Windows ###
 # Windows thumbnail cache files
