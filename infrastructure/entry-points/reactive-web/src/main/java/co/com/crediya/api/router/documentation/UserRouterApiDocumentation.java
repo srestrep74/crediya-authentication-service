@@ -2,10 +2,13 @@ package co.com.crediya.api.router.documentation;
 
 import co.com.crediya.api.dto.v1.CreateUserRequest;
 import co.com.crediya.api.dto.v1.CreateUserResponse;
+import co.com.crediya.api.dto.v1.ExistsUserResponse;
 import co.com.crediya.api.handler.v1.UserHandler;
 import co.com.crediya.api.helpers.ApiStandardError;
 import co.com.crediya.api.router.UserRouter;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -72,6 +75,57 @@ public class UserRouterApiDocumentation {
                                                     examples = @ExampleObject(
                                                             name = "EmailConflict",
                                                             value = "{ \"timestamp\": \"2025-08-25T19:00:00\", \"status\": 409, \"error\": \"Conflict\", \"message\": \"Email already exists\", \"path\": \"/api/v1/users\" }"
+                                                    )
+                                            )
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "500",
+                                            description = "Internal Server Error"
+                                    )
+                            }
+                    )
+            ),
+            @RouterOperation(
+                    path = "/api/v1/users/{userId}/exists",
+                    method = RequestMethod.GET,
+                    beanClass = UserHandler.class,
+                    beanMethod = "listenGetExistsUser",
+                    operation = @Operation(
+                            summary = "Check if a user exists",
+                            description = "Returns whether a user with the given ID exists in the system",
+                            operationId = "existsUser",
+                            tags = {"User Management"},
+                            parameters = {
+                                    @Parameter(
+                                            name = "userId",
+                                            description = "ID of the user to check",
+                                            required = true,
+                                            in = ParameterIn.PATH,
+                                            example = "1"
+                                    )
+                            },
+                            responses = {
+                                    @ApiResponse(
+                                            responseCode = "200",
+                                            description = "User existence returned successfully",
+                                            content = @Content(
+                                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                    schema = @Schema(implementation = ExistsUserResponse.class),
+                                                    examples = @ExampleObject(
+                                                            name = "UserExists",
+                                                            value = "{ \"userId\": 1, \"exists\": true }"
+                                                    )
+                                            )
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "404",
+                                            description = "User not found",
+                                            content = @Content(
+                                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                    schema = @Schema(implementation = ApiStandardError.class),
+                                                    examples = @ExampleObject(
+                                                            name = "UserNotFound",
+                                                            value = "{ \"timestamp\": \"2025-08-25T19:00:00\", \"status\": 404, \"error\": \"Not Found\", \"message\": \"User with id 1 not found\", \"path\": \"/api/v1/users/1/exists\" }"
                                                     )
                                             )
                                     ),
